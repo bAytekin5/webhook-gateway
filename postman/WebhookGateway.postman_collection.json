@@ -1,0 +1,261 @@
+{
+  "info": {
+    "name": "Webhook Gateway",
+    "description": "Collection for Webhook Gateway API requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Webhook Payment Success",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transactionId\": \"txn-postman-001\",\n  \"paymentStatus\": \"SUCCESS\",\n  \"amount\": 120.5,\n  \"currency\": \"USD\",\n  \"details\": \"Postman success request\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/webhooks/payment",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "webhooks",
+            "payment"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Webhook Payment Failure (DLQ)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transactionId\": \"txn-postman-fail-001\",\n  \"paymentStatus\": \"FAIL\",\n  \"amount\": 45.0,\n  \"currency\": \"EUR\",\n  \"details\": \"Postman failure request\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/webhooks/payment",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "webhooks",
+            "payment"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Webhook Idempotent Repeat",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transactionId\": \"txn-postman-idem-001\",\n  \"paymentStatus\": \"SUCCESS\",\n  \"amount\": 120.5,\n  \"currency\": \"USD\",\n  \"details\": \"Postman idempotent request\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/webhooks/payment",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "webhooks",
+            "payment"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Webhook Validation Error",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"transactionId\": \"\",\n  \"paymentStatus\": \"SUCCESS\",\n  \"amount\": 0,\n  \"currency\": \"\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/webhooks/payment",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "webhooks",
+            "payment"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DLQ Retry",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"messageCount\": 5,\n  \"targetQueue\": \"webhook-queue\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/admin/dlq/retry",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "admin",
+            "dlq",
+            "retry"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DLQ Retry Invalid Count",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"messageCount\": 0,\n  \"targetQueue\": \"webhook-queue\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/admin/dlq/retry",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "admin",
+            "dlq",
+            "retry"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DLQ Retry Empty Queue",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"messageCount\": 5,\n  \"targetQueue\": \"webhook-queue\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/api/admin/dlq/retry",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "api",
+            "admin",
+            "dlq",
+            "retry"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Health Endpoint",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/actuator/health",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "actuator",
+            "health"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Info Endpoint",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/actuator/info",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "actuator",
+            "info"
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
+
