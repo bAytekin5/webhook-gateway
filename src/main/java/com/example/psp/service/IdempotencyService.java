@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class IdempotencyService {
 
     private static final String IDEMPOTENCY_KEY_PREFIX = "idempotency:";
-    private static final long EXPIRATION_MINUTES = 60; // Or a suitable duration
+    private static final long EXPIRATION_MINUTES = 60; 
 
     private final StringRedisTemplate redisTemplate;
 
@@ -29,3 +29,4 @@ public class IdempotencyService {
         );
     }
 }
+
